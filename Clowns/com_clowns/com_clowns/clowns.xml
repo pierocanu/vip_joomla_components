@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="component" version="1.7.0" method="upgrade">
+	
+	<name>Clowns</name>
+	<creationDate>Ago 2011</creationDate>
+	<author>Piero Canu</author>
+	<authorEmail>piero.canu@hotmail.it</authorEmail>
+	<authorUrl>In arrivo</authorUrl>
+	<copyright>Piero Canu 2011</copyright>
+	<license>GNU/GPL</license>
+	<version>1.1.0_20151031</version>
+	<description>Gestione elenco clowns</description>
+	<update> 
+		<schemas>
+			<schemapath type="mysql">sql/updates/mysql</schemapath>
+		</schemas>
+	</update>
+
+	<files folder="site">
+		<filename>index.html</filename>
+		<filename>clowns.php</filename>
+		<filename>controller.php</filename>
+		<folder>views</folder>
+		<folder>models</folder>
+	</files>
+	
+	<administration>
+	</administration>
+		
+</extension>

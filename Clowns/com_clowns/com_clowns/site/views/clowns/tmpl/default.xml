@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+	<layout title="Gestione clowns">
+		<message>Gestisci i dati dei clowns per i turni e l'elenco (non i dati utente)</message>
+	</layout>
+
+	<fields name="request">
+		<fieldset name="request">
+			
+			<field name="Titolo" type="text" label="Titolo pagina" description="Titolo della pagina" default="Gestione elenco clowns"/>
+		
+		</fieldset>
+		
+	</fields>
+	
+</metadata>
+

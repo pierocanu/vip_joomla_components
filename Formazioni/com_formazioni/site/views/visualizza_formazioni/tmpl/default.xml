@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+	<layout title="Visualizza formazioni">
+		<message>Visualizza formazioni</message>
+	</layout>
+
+	<fields name="request">
+		<fieldset name="request">
+			<field name="SuffissoDB" type="text" label="Suffisso DB" description="Da lasciare invariato una volta settato!" default="formaz_ca"/>
+
+			<field name="Titolo" type="text" label="Titolo pagina" description="Titolo della pagina " default="Visualizza calendario formazioni"/>
+
+	</fieldset>
+		
+	</fields>
+	
+</metadata>
+

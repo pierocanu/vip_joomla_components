@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+	<layout title="Visualizza turni">
+		<message>Visualizza turni</message>
+	</layout>
+
+	<fields name="request">
+		<fieldset name="request">
+			<field name="SuffissoDB" type="text" label="Suffisso DB" description="Da lasciare invariato una volta settato!" default="ospedale_reparto"/>
+			
+			<field name="Titolo" type="text" label="Titolo pagina" description="Titolo della pagina (ospedale a cui si riferiscono i turni)" default="Visualizza/gestisci turni "/>
+
+			<field name="MailStaff" type="text" label="Mail staff di riferimento" description="Mail dello staff a cui inviare richieste per inserimento nei turni" default="Mail staff" />
+
+
+   			<field type="list" name="Lun" label="Lunedì" description="Selezionare se c'è normalmente servizio il Lunedì" default="0">
+				<option value="0">Nessuno</option>
+				<option value="1">Tutti nel mese</option>
+				<option value="2">Solo l'ultimo nel mese</option>				
+			</field>
+
+   			<field type="list" name="Mar" label="Martedì" description="Selezionare se c'è normalmente servizio il Martedì" default="0">
+				<option value="0">Nessuno</option>
+				<option value="1">Tutti nel mese</option>
+				<option value="2">Solo l'ultimo nel mese</option>					
+			</field>
+
+   			<field type="list" name="Mer" label="Mercoledì" description="Selezionare se c'è normalmente servizio il Mercoledì" default="0">
+				<option value="0">Nessuno</option>
+				<option value="1">Tutti nel mese</option>
+				<option value="2">Solo l'ultimo nel mese</option>			
+			</field>
+   			
+			<field type="list" name="Gio" label="Giovedì" description="Selezionare se c'è normalmente servizio il Giovedì" default="0">
+				<option value="0">Nessuno</option>
+				<option value="1">Tutti nel mese</option>
+				<option value="2">Solo l'ultimo nel mese</option>						
+			</field>
+			
+   			<field type="list" name="Ven" label="Venerdì" description="Selezionare se c'è normalmente servizio il Venerdì" default="0">
+				<option value="0">Nessuno</option>
+				<option value="1">Tutti nel mese</option>
+				<option value="2">Solo l'ultimo nel mese</option>					
+			</field>
+							
+   			<field type="list" name="Sab" label="Sabato" description="Selezionare se c'è normalmente servizio il Sabato" default="0">
+				<option value="0">Nessuno</option>
+				<option value="1">Tutti nel mese</option>
+				<option value="2">Solo l'ultimo nel mese</option>		
+			</field>
+			
+   			<field type="list" name="Dom" label="Domenica" description="Selezionare se c'è normalmente servizio la Domenica" default="0">
+				<option value="0">Nessuno</option>
+				<option value="1">Tutti nel mese</option>
+				<option value="2">Solo l'ultimo nel mese</option>		
+			</field>
+
+		</fieldset>
+		
+	</fields>
+	
+</metadata>
+
