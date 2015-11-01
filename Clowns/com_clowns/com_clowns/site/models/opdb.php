@@ -18,10 +18,23 @@ jimport('joomla.application.component.modelitem');
 
 class OpDBModelOpDB extends JModelItem{	 //principali funzioni sul db
 
+	const TABLE_NAME = "#__clowns";
+
+    function isVoid($param)
+    {
+        $isVoid = false;
+
+        if (!isset($param) || !isset($param) || $param == '' || $param == '') {
+            $isVoid = true;
+        }
+
+        return $isVoid;
+    }
+
 	
 	function aggClown($nome,$cognome,$nomeClown,$mailClown,$cellClown){ //aggiunge il clown nel database
 		
-		if(!isset($nomeClown) || !isset($mailClown) || $nomeClown=='' || $mailClown==''){
+		if($this->isVoid($nomeClown)){
 			return 2;
 		}
 		
@@ -46,18 +59,16 @@ class OpDBModelOpDB extends JModelItem{	 //principali funzioni sul db
 		$mailClown=$array_params[3];
 		$cellClown=$array_params[4];
 		
-		$tabella= "#__clowns";
 		$db = JFactory::getDBO();
 		$query = $db->getQuery(true);
 		
-		 
 		//Crea la tabella se non esiste
-		$query='CREATE TABLE IF NOT EXISTS '.$tabella.'(`Nome` VARCHAR(128), `Cognome` VARCHAR(128), `Nome_Clown` VARCHAR(128) , `Mail` VARCHAR(150) , `Cell` VARCHAR(16)) ';
+		$query='CREATE TABLE IF NOT EXISTS '.self::TABLE_NAME.'(`Nome` VARCHAR(128), `Cognome` VARCHAR(128), `Nome_Clown` VARCHAR(128) , `Mail` VARCHAR(150) , `Cell` VARCHAR(16)) ';
 		$db->setQuery($query);
 		$db->query();
 		
 		//Cerca se esiste già il clown
-		$query="SELECT * FROM `$tabella` WHERE Nome_Clown='$nomeClown' OR Mail='$mailClown'";
+		$query="SELECT * FROM `".self::TABLE_NAME."` WHERE Nome_Clown='$nomeClown' OR Mail='$mailClown'";
 		$db->setQuery($query);
 		$db->query();
 		$rows = $db->loadObjectList();
@@ -65,7 +76,7 @@ class OpDBModelOpDB extends JModelItem{	 //principali funzioni sul db
 		if ($rows == NULL){
 						
 			//inserisce i dati 
-			$query="INSERT INTO `$tabella` (Nome, Cognome, Nome_Clown, Mail, Cell) VALUES (\"$nome\", \"$cognome\", \"$nomeClown\", \"$mailClown\", \"$cellClown\")";
+			$query="INSERT INTO `".self::TABLE_NAME."` (Nome, Cognome, Nome_Clown, Mail, Cell) VALUES (\"$nome\", \"$cognome\", \"$nomeClown\", \"$mailClown\", \"$cellClown\")";
 			$db->setQuery($query);
 			$db->query();
 	
@@ -79,20 +90,19 @@ class OpDBModelOpDB extends JModelItem{	 //principali funzioni sul db
 	function rimClown($nomeClown){
 
 		$nomeClown=trim($nomeClown);
-		
+
 		$nomeClown=ucfirst($nomeClown);
-		
+
 		$nomeClown=htmlspecialchars_decode($nomeClown, ENT_QUOTES);
 		$nomeClown=htmlspecialchars($nomeClown, ENT_QUOTES);
 		
 		$nomeClown=str_replace(' ','_' ,$nomeClown);
 
 
-		$tabella= "#__clowns";
 		$db = JFactory::getDBO();
 		$query = $db->getQuery(true);
 		
-		$query="DELETE FROM `$tabella` WHERE Nome_Clown = '$nomeClown' ";
+		$query="DELETE FROM `".self::TABLE_NAME."` WHERE Nome_Clown = '$nomeClown' ";
 		$db->setQuery($query);
 		if($db->query()==1){
 			return 0;
@@ -101,14 +111,18 @@ class OpDBModelOpDB extends JModelItem{	 //principali funzioni sul db
 		 
 	}
 
+	function modClown($nome,$cognome,$nomeClown,$mailClown,$cellClown)
+	{
+
+	}
+
 	function leggiElencoClowns(){
 			
-		$tabella= "#__clowns";
 		$db = JFactory::getDBO();
 		$query = $db->getQuery(true);
 		 
 		//Recupera i nomi dei clown in elenco (nomi, cognomi e nomi clown)
-		$query="SELECT * FROM `$tabella` ORDER BY Nome_Clown";
+		$query="SELECT * FROM `".self::TABLE_NAME."` ORDER BY Nome_Clown";
 		$db->setQuery($query);
 		$db->query();
 		
