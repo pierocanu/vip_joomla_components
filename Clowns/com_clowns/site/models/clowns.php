@@ -16,22 +16,32 @@ defined('_JEXEC') or die('Restricted access');
 // import Joomla modelitem library
 jimport('joomla.application.component.modelitem');
 
-class clownsModelclowns extends JModelItem{	 
+class clownsModelclowns extends JModelItem
+{
+    public function getTitolo()
+    {
+        $Titolo = JRequest::getString("Titolo");
+        return $Titolo;
+    }
 
-	public function getTitolo(){ 
+    public function getTesto()
+    {
+        $Titolo = JRequest::getString("Testo");
+        return $Titolo;
+    }
 
-			$Titolo = JRequest::getString("Titolo");
-			return $Titolo;
-	}
-	
-	public function getTesto(){ 
+    public function getTipiSocio()
+    {
+        $TipiSocio = JRequest::getString("TipiSocio");
+        return $TipiSocio;
+    }
 
-			$Titolo = JRequest::getString("Testo");
-			return $Titolo;
-	}
+    public function getVips()
+    {
+        $Vips = JRequest::getString("Vips");
+        return $Vips;
+    }
 
 }
-
-
 
 ?>

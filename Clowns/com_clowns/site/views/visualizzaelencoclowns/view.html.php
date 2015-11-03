@@ -33,12 +33,12 @@ class clownsViewvisualizzaelencoclowns extends JView
 			$this->titolo = $this->get('Titolo');  //Prende Titolo dal model attuale tramite il GET
 			$this->testo = $this->get('Testo');  //Prende il testo da anteporre all'elenco
 
-			$Clowns = $this->modelOpDB->leggiElencoClowns();
-			$this->nomi =  $Clowns[nomi];
-			$this->cognomi =  $Clowns[cognomi];
-			$this->nomiClowns =  $Clowns[nomiClowns];
-			$this->mail = $Clowns[mail];
-			$this->cell = $Clowns[cell];
+			$clowns = $this->modelOpDB->leggiElencoClowns();
+			$this->nomi =  $clowns['nomi'];
+			$this->cognomi =  $clowns['cognomi'];
+			$this->nomiClowns =  $clowns['nomiClowns'];
+			$this->mail = $clowns['mail'];
+			$this->cell = $clowns['cell'];
 			
 			
 			// Check for errors.

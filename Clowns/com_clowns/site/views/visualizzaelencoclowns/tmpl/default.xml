@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <metadata>
-	<layout title="Visualizza elenco clowns">
-		<message>Visualizza elenco di tutti i clowns registrati</message>
-	</layout>
+    <layout title="Visualizza elenco clowns">
+        <message>Visualizza elenco di tutti i clowns registrati</message>
+    </layout>
 
-	<fields name="request">
-		<fieldset name="request">
-			
-			<field name="Titolo" type="text" label="Titolo pagina" description="Titolo della pagina" default="Elenco clowns"/>
-			<field name="Testo" type="textarea" label="Testo prima dell'elenco" description="Testo da visualizzare prima dell'elenco vero e proprio" default="Questo è l'elenco di tutti i clown presenti nel database:"/>
-	
-		</fieldset>
-		
-	</fields>
-	
+    <fields name="request">
+        <fieldset name="request">
+
+            <field name="Titolo" type="text" label="Titolo pagina" description="Titolo della pagina"
+                   default="Elenco clowns"/>
+            <field name="Testo" type="textarea" label="Testo prima dell'elenco"
+                   description="Testo da visualizzare prima dell'elenco vero e proprio"
+                   default="Questo è l'elenco di tutti i clown presenti nel database:"/>
+
+        </fieldset>
+
+    </fields>
+
 </metadata>
 
