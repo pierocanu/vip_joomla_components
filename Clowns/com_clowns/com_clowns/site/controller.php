@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 /*
  * @package Joomla 1.7
@@ -18,110 +18,135 @@ defined('_JEXEC') or die('Restricted access');
 jimport('joomla.application.component.controller');
 
 
-class  ClownsController extends JController{
-	
-		function display(){ //default task
-			require_once(JPATH_COMPONENT.DS.'models'.DS.'opdb.php');
-			$modelOpDB=new OpDbModelOpDB;
-	
-			$vName	= JRequest::getCmd('view', 'categories');
-			JRequest::setVar('view', $vName);
-			$view = $this ->getView($vName,'html');	
-			
-			$view->setModel($this->getModel('clowns'),true);
-			
-			$view->set('messaggio', '');
-			$view->set('modelOpDB', $modelOpDB);
-			
-			parent::display();    
-		}
-			
-		function aggClown(){
-			require_once(JPATH_COMPONENT.DS.'models'.DS.'opdb.php');
-			$modelOpDB=new OpDbModelOpDB;
-				
-			$model = $this->getModel('clowns');
-					
-			$nome = JRequest::getVar('nome');
-			$cognome = JRequest::getVar('cognome');
-			$nomeClown = JRequest::getVar('nomeClown');
-			$mailClown = JRequest::getVar('mailClown');
-			$cellClown = JRequest::getVar('cellClown');
-			
-			if(!isset($nomeClown)){echo "ASSDS";}
-			
-			$aggiunta = $modelOpDB->aggClown($nome,$cognome,$nomeClown,$mailClown,$cellClown);
-			
-			$view = $this ->getView($vName,'html');	
-			
-			if( $aggiunta == 0){  //op. andata a buon fine
-				$view->set('nome',ucfirst($nome));
-				$view->set('cognome',ucfirst($cognome));
-				$view->set('nomeClown',ucfirst($nomeClown));
-				$view->set('modelOpDB', $modelOpDB);
-				
-				$view->set('messaggio','clown-aggiunto');
-			} else if($aggiunta == 1){//clown già presente
-				$view->set('nome',ucfirst($nome));
-				$view->set('cognome',ucfirst($cognome));
-				$view->set('nomeClown',ucfirst($nomeClown));
-				$view->set('mailClown',ucfirst($mailClown));
-				$view->set('modelOpDB', $modelOpDB);
-				
-				$view->set('messaggio','clown-già-in-elenco');
-			} else if($aggiunta == 2){//clown già presente
-				$view->set('nome',ucfirst($nome));
-				$view->set('cognome',ucfirst($cognome));
-				$view->set('nomeClown',ucfirst($nomeClown));
-				$view->set('mailClown',ucfirst($mailClown));
-				$view->set('modelOpDB', $modelOpDB);
-				
-				$view->set('messaggio','dati-insufficienti');
-			} 
-			
-			else {			//stampa errore
-				$view->set('messaggio','errore-clown-non-aggiunto');
-			} 
-			
-			parent::display(); 
-			//$view->display();
-		}
-			
-		function rimClown(){
-			require_once(JPATH_COMPONENT.DS.'models'.DS.'opdb.php');
-			$modelOpDB=new OpDbModelOpDB;
-				
-			$model = $this->getModel('clowns');
-			
-			$nomeClown = JRequest::getVar('nomeClown');
-		
-			$rimoz = $modelOpDB->rimClown($nomeClown);
-									
-			$view = $this ->getView($vName,'html');		
-			
-			
-			if( $rimoz == 0){  //op. andata a buon fine
-				
-				$view->set('nomeClown',ucfirst($nomeClown));
-				$view->set('modelOpDB', $modelOpDB);
-				$view->set('messaggio','clown-rimosso');
-			} else if($rimoz == 1){//clown non presente
-				
-				$view->set('nomeClown',ucfirst($nomeClown));
-				$view->set('modelOpDB', $modelOpDB);
-				$view->set('messaggio','clown-non-presente');
-			} 
-			
-			else {	//stampa errore
-				$view->set('messaggio','errore-clown-non-rimosso');
-				
-				
-			} 
-						
-			parent::display(); 
-		//	$view->display();	
-		
-		}
+class  ClownsController extends JController
+{
+    const ACTION_CLOWN_INSUFFICIENT_DATA = -1;
+    const ACTION_RESULT_ERROR = -2;
+
+    function display()
+    {
+        // Default task
+        require_once(JPATH_COMPONENT . DS . 'models' . DS . 'opdb.php');
+
+        $vName = JRequest::getCmd('view', 'categories');
+        JRequest::setVar('view', $vName);
+        $view = $this->getView($vName, 'html');
+
+        $view->setModel($this->getModel('clowns'), true);
+        $view->set('modelOpDB', new OpDbModelOpDB);
+
+        parent::display();
+    }
+
+    function aggClown()
+    {
+        require_once(JPATH_COMPONENT . DS . 'models' . DS . 'opdb.php');
+        $modelOpDB = new OpDbModelOpDB;
+
+        $vName = JRequest::getCmd('view', 'categories');
+        $view = $this->getView($vName, 'html');
+
+        $nomeClown = JRequest::getVar('nomeClownToAdd');
+        $mailClown = JRequest::getVar('mailClownToAdd');
+        $nome = JRequest::getVar('nomeToAdd');
+        $cognome = JRequest::getVar('cognomeToAdd');
+        $cellClown = JRequest::getVar('cellClownToAdd');
+        $statoSocio = JRequest::getVar('statoSocioIdToAdd');
+        $vip = JRequest::getVar('vipIdToAdd');
+
+        if (isset($nomeClown) && isset($mailClown) )
+        {
+            $view->set('nomeClown', ucfirst($nomeClown));
+            $view->set('nome', ucfirst($nome));
+            $view->set('mail', ucfirst($mailClown));
+            $view->set('cognome', ucfirst($cognome));
+
+            $addResult = $modelOpDB->aggClown($nomeClown, $mailClown, $nome, $cognome, $cellClown, $statoSocio, $vip);
+            $view->set('actionResult', $addResult);
+
+        }else
+        {
+            // Dati insufficienti
+            $view->set('actionResult', self::ACTION_CLOWN_INSUFFICIENT_DATA);
+        }
+
+        $view->set('modelOpDB', $modelOpDB);
+
+        parent::display();
+        //$view->display();
+    }
+
+    function rimClown()
+    {
+        require_once(JPATH_COMPONENT . DS . 'models' . DS . 'opdb.php');
+        $modelOpDB = new OpDbModelOpDB;
+
+        $vName = JRequest::getCmd('view', 'categories');
+        $view = $this->getView($vName, 'html');
+
+        $idToRemove = JRequest::getVar('idToRemove');
+        if (isset($idToRemove))
+        {
+            $nomeClown = JRequest::getVar('nomeClownToDel');
+            $view->set('nomeClown', ucfirst($nomeClown));
+
+            $rimResult = $modelOpDB->rimClown($idToRemove);
+            $view->set('actionResult', $rimResult);
+        }
+
+        $view->set('modelOpDB', $modelOpDB);
+
+        parent::display();
+        //	$view->display();
+    }
+
+    function modClown()
+    {
+        require_once(JPATH_COMPONENT . DS . 'models' . DS . 'opdb.php');
+        $modelOpDB = new OpDbModelOpDB;
+
+        $vName = JRequest::getCmd('view', 'categories');
+        $view = $this->getView($vName, 'html');
+
+        $idToUpdate = JRequest::getVar('idToUpdate');
+        $nomeClownCurrent = JRequest::getVar('nomeClownCurrent');
+
+        $nomeClownNew = JRequest::getVar('nomeClownNew');
+        $mailClownNew = JRequest::getVar('mailClownNew');
+        $nomeNew = JRequest::getVar('nomeNew');
+        $cognomeNew = JRequest::getVar('cognomeNew');
+        $cellClownNew = JRequest::getVar('cellClownNew');
+        $statoSocioNew = JRequest::getVar('statoSocioNew');
+        $vipNew = JRequest::getVar('vipNew');
+
+        if (isset($nomeClownCurrent) )
+        {
+            if (isset($nomeClownNew) && isset($mailClownNew))
+            {
+                $view->set('nomeClown', ucfirst($nomeClownCurrent));
+
+                $modResult = $modelOpDB->modClown($idToUpdate, $nomeClownNew, $mailClownNew, $nomeNew, $cognomeNew, $cellClownNew, $statoSocioNew, $vipNew);
+                $view->set('actionResult', $modResult);
+
+            } else
+            {
+                // Dati insufficienti
+                $view->set('actionResult', self::ACTION_CLOWN_INSUFFICIENT_DATA);
+            }
+
+
+        }else
+        {
+            // Dati insufficienti
+            $view->set('actionResult', self::ACTION_CLOWN_INSUFFICIENT_DATA);
+        }
+
+        $view->set('modelOpDB', $modelOpDB);
+
+        parent::display();
+        //	$view->display();
+
+    }
 
 }
 

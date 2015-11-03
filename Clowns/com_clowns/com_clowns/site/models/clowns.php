@@ -30,6 +30,18 @@ class clownsModelclowns extends JModelItem
         return $Titolo;
     }
 
+    public function getTipiSocio()
+    {
+        $TipiSocio = JRequest::getString("TipiSocio");
+        return $TipiSocio;
+    }
+
+    public function getVips()
+    {
+        $Vips = JRequest::getString("Vips");
+        return $Vips;
+    }
+
 }
 
 ?>

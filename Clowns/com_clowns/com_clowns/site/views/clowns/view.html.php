@@ -31,18 +31,29 @@ class clownsViewclowns extends JView
     // Overwriting JView display method
     function display($tpl = null)
     {
+        $this->titolo = $this->get('Titolo');
 
-        $this->titolo = $this->get('Titolo');  //Prende Titolo dal model attuale tramite il GET
+        $statiSocioDisponibili = $this->modelOpDB->getStatiSocioDisponibili();
+        $this->statiSocioDispIds = $statiSocioDisponibili['ids'];
+        $this->statiSocioDispNomi = $statiSocioDisponibili['nomi'];
 
-        $Clowns = $this->modelOpDB->leggiElencoClowns();
-        $this->nomi = $Clowns[nomi];
-        $this->cognomi = $Clowns[cognomi];
-        $this->nomiClowns = $Clowns[nomiClowns];
-        $this->mail = $Clowns[mail];
-        $this->cell = $Clowns[cell];
+        $vipDisponibili = $this->modelOpDB->getVipDisponibili();
+        $this->vipDisponibiliIds = $vipDisponibili['ids'];
+        $this->vipDisponibiliNomi = $vipDisponibili['nomi'];
+
+        $clowns = $this->modelOpDB->leggiElencoClowns();
+        $this->ids = $clowns['ids'];
+        $this->nomi = $clowns['nomi'];
+        $this->cognomi = $clowns['cognomi'];
+        $this->nomiClowns = $clowns['nomiClowns'];
+        $this->mails = $clowns['mails'];
+        $this->cell = $clowns['cell'];
+        $this->statiSoci = $clowns['statiSoci'];
+        $this->vips = $clowns['vips'];
 
         // Check for errors.
-        if (count($errors = $this->get('Errors'))) {
+        if (count($errors = $this->get('Errors')))
+        {
             JError::raiseError(500, implode('<br />', $errors));
             return false;
         }

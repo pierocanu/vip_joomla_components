@@ -8,14 +8,22 @@
 	<authorUrl>In arrivo</authorUrl>
 	<copyright>Piero Canu 2011</copyright>
 	<license>GNU/GPL</license>
-	<version>1.1.0_20151031</version>
+	<version>1.2.2</version>
 	<description>Gestione elenco clowns</description>
-	<update> 
+
+
+	<install> <!-- Runs on install -->
+		<sql>
+			<file driver="mysql" charset="utf8">sql/install.mysql.utf8.sql</file>
+		</sql>
+	</install>
+
+	<update> <!-- Runs on update; New in 2.5 -->
 		<schemas>
 			<schemapath type="mysql">sql/updates/mysql</schemapath>
 		</schemas>
 	</update>
-
+ 
 	<files folder="site">
 		<filename>index.html</filename>
 		<filename>clowns.php</filename>
