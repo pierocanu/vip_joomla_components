@@ -37,7 +37,9 @@ defined('_JEXEC') or die('Restricted access');
 </script>
 
 
-<h1 style="text-align:center; font-size:28px;"><?php echo $this->titolo; ?> </h1>
+<h1 style="text-align:center; font-size:28px;">
+    <?php  echo $this->titolo; ?>
+</h1>
 
 <?php
 
@@ -267,7 +269,6 @@ $vipDisponibiliNomi = $this->vipDisponibiliNomi;
     ?>
 
     <!-- Aggiunta clown-->
-
     <div class="formGestione">
         <h4 class="titoloFormGestione">Aggiungi un clown nell'elenco</h4>
 
@@ -275,27 +276,6 @@ $vipDisponibiliNomi = $this->vipDisponibiliNomi;
             il nome clown e la mail, che dovranno essere unici.</p>
 
         <form name="FormAggiungiClown" method="post">
-
-            <script>
-                function changeStatoSocioIdToAdd() {
-                    var indexSelected = document.getElementById("statoSocioToAdd").selectedIndex;
-
-                    var statiSocioDispIds = new Array();
-                    statiSocioDispIds = [<?php createJsArray($statiSocioDispIds)?>];
-                    document.getElementById("statoSocioIdToAdd").value = statiSocioDispIds[indexSelected];
-
-                }
-
-                function changeVipIdToAdd() {
-                    var indexSelected = document.getElementById("vipToAdd").selectedIndex;
-
-                    var vipsDispIds = new Array();
-                    vipsDispIds = [<?php createJsArray($vipDisponibiliIds)?>];
-                    document.getElementById("vipIdToAdd").value = vipsDispIds[indexSelected];
-
-                }
-            </script>
-
 
             <label for="nomeClownToAdd"> Nome Clown: </label>
             <input type="text" name="nomeClownToAdd" value="" style="font-weight:bold;"/>
@@ -322,12 +302,11 @@ $vipDisponibiliNomi = $this->vipDisponibiliNomi;
 
             <br/>
             <label for="statoSocioToAdd"> Stato socio: </label>
-            <select id="statoSocioToAdd" name="statoSocioToAdd" onchange="changeStatoSocioIdToAdd()"
-                    style="font-weight:bold;">
+            <select id="statoSocioToAdd" name="statoSocioToAdd" style="font-weight:bold;">
                 <?php
                 for ($n = 0; $n < count($statiSocioDispNomi); $n++)
                 {
-                    echo "<option>$statiSocioDispNomi[$n]</option>";
+                    echo("<option value=\"$statiSocioDispIds[$n]\">$statiSocioDispNomi[$n]</option>");
                 }
                 ?>
             </select>
@@ -335,11 +314,11 @@ $vipDisponibiliNomi = $this->vipDisponibiliNomi;
 
             <br/>
             <label for="vipToAdd"> Vip di appartenenza:</label>
-            <select id="vipToAdd" name="vipToAdd" onchange="changeVipIdToAdd()" style="font-weight:bold;">
+            <select id="vipToAdd" name="vipToAdd" style="font-weight:bold;">
                 <?php
                 for ($n = 0; $n < count($vipDisponibiliNomi); $n++)
                 {
-                    echo "<option>$vipDisponibiliNomi[$n]</option>";
+                    echo("<option value=\"$vipDisponibiliIds[$n]\">$vipDisponibiliNomi[$n]</option>");
                 }
                 ?>
             </select>
@@ -347,11 +326,8 @@ $vipDisponibiliNomi = $this->vipDisponibiliNomi;
             <br/>
             <br/>
             <input type="submit" name="" value="Aggiungi clown" style="font-weight:bold;"/>
-            <input type="hidden" id="statoSocioIdToAdd" name="statoSocioIdToAdd"
-                   value="<?php echo($statiSocioDispIds[0]); ?>"/>
-            <input type="hidden" id="vipIdToAdd" name="vipIdToAdd" value="<?php echo($vipDisponibiliIds[0]); ?>"/>
             <input type="hidden" name="option" value="com_clowns"/>
-            <input type="hidden" name="task" value="aggClown"/>
+            <input type="hidden" name="task" value="gestioneclowns.aggClown"/>
 
 
         </form>
@@ -366,25 +342,12 @@ $vipDisponibiliNomi = $this->vipDisponibiliNomi;
 
         <form name="FormRimuoviClown" method="post">
 
-            <script>
-                function changeIdToRemove() {
-                    var indexSelected = document.getElementById("selNomeClownToDel").selectedIndex;
-
-                    // Id that will be removed
-                    var ids = new Array();
-                    ids = [<?php createJsArray($ids)?>];
-                    document.getElementById("idToRemove").value = ids[indexSelected];
-                }
-            </script>
-
-
             <label for="nomeClown"> Rimuovi il clown:</label>
-            <select id="selNomeClownToDel" name="nomeClownToDel" onchange="changeIdToRemove()"
-                    style="font-weight:bold;">
+            <select id="idToRemove" name="idToRemove" style="font-weight:bold;">
                 <?php
                 for ($n = 0; $n < $countNomi; $n++)
                 {
-                    echo "<option>$nomiClowns[$n]</option>";
+                    echo("<option value=\"$ids[$n]\">$nomiClowns[$n]</option>");
                 }
                 ?>
             </select>
@@ -392,10 +355,8 @@ $vipDisponibiliNomi = $this->vipDisponibiliNomi;
             <br/>
             <br/>
             <input type="submit" name="" value="Rimuovi clown" style="font-weight:bold;"/>
-            <input id="idToRemove" type="hidden" name="idToRemove" value="<?php echo($ids[0]); ?>"
-                   style="font-weight:bold;"/>
             <input type="hidden" name="option" value="com_clowns" style="font-weight:bold;"/>
-            <input type="hidden" name="task" value="rimClown" style="font-weight:bold;"/>
+            <input type="hidden" name="task" value="gestioneclowns.rimClown" style="font-weight:bold;"/>
 
         </form>
     </div>
@@ -422,7 +383,6 @@ $vipDisponibiliNomi = $this->vipDisponibiliNomi;
                     var nomiClown = new Array();
                     nomiClown = [<?php createJsArray($nomiClowns)?>];
                     document.getElementById("modNomeClown").value = nomiClown[indexSelected];
-                    document.getElementById("nomeClownCurrent").value = nomiClown[indexSelected];
 
                     var mails = new Array();
                     mails = [<?php createJsArray($mails)?>];
@@ -440,41 +400,40 @@ $vipDisponibiliNomi = $this->vipDisponibiliNomi;
                     cellulari = [<?php createJsArray($cell)?>];
                     document.getElementById("modCell").value = cellulari[indexSelected];
 
-                    var statiSoci = new Array();
-                    statiSoci = [<?php createJsArray($statiSocio)?>];
-                    document.getElementById("modStatoSocio").selectedIndex = statiSoci[indexSelected];
-                    document.getElementById("statoSocioNew").value = statiSoci[indexSelected];
+                    var statiSociIds = new Array();
+                    statiSociIds = [<?php createJsArray($statiSocio)?>];
+                    var statoSocioId = statiSociIds[indexSelected];
 
-                    var vips = new Array();
-                    vips = [<?php createJsArray($vips)?>];
-                    document.getElementById("modVip").selectedIndex = vips[indexSelected];
-                    document.getElementById("vipNew").value = vips[indexSelected];
+                    var optionsSoci = document.getElementById("modStatoSocio").options;
+                    for (var i = 0; i < optionsSoci.length; i++) {
+
+                        var optionSocioValue = parseInt(optionsSoci[i].value);
+                        if (statoSocioId == optionSocioValue) {
+                            document.getElementById("modStatoSocio").selectedIndex = i;
+                            break;
+                        }
+
+                    }
+
+                    var vipsIds = new Array();
+                    vipsIds = [<?php createJsArray($vips)?>];
+                    var vipsId = vipsIds[indexSelected];
+
+                    var optionsVips = document.getElementById("modVip").options;
+                    for (var i = 0; i < optionsVips.length; i++) {
+
+                        var optionVipValue = parseInt(optionsVips[i].value);
+                        if (vipsId == optionVipValue) {
+                            document.getElementById("modVip").selectedIndex = i;
+                            break;
+                        }
+
+                    }
                 }
             </script>
-
-            <script>
-                function changeStatoSocioToModify() {
-                    var indexSelected = document.getElementById("modStatoSocio").selectedIndex;
-
-                    var statiSocioDispIds = new Array();
-                    statiSocioDispIds = [<?php createJsArray($statiSocioDispIds)?>];
-                    document.getElementById("statoSocioNew").value = statiSocioDispIds[indexSelected];
-                }
-            </script>
-
-            <script>
-                function changeVipToModify() {
-                    var indexSelected = document.getElementById("modVip").selectedIndex;
-
-                    var vipDispIds = new Array();
-                    vipDispIds = [<?php createJsArray($vipDisponibiliIds)?>];
-                    document.getElementById("vipNew").value = vipDispIds[indexSelected];
-                }
-            </script>
-
 
             <label for="nomeClown"> Modifica il clown:</label>
-            <select id="selNomeClown" onchange="changeValuesToModify()" name="nomeClown" style="font-weight:bold;">
+            <select id="selNomeClown" name="nomeClownCurrent" onchange="changeValuesToModify()" style="font-weight:bold;">
                 <?php
                 for ($n = 0; $n < $countNomi; $n++)
                 {
@@ -511,18 +470,16 @@ $vipDisponibiliNomi = $this->vipDisponibiliNomi;
 
             <br/>
             <label for="modStatoSocio"> Stato socio: </label>
-            <select id="modStatoSocio" style="font-weight:bold;" onchange="changeStatoSocioToModify()">
+            <select id="modStatoSocio" name="statoSocioNew" style="font-weight:bold;">
                 <?php
                 for ($n = 0; $n < count($statiSocioDispNomi); $n++)
                 {
-                    $opt = "<option ";
+                    $opt = "<option value=\"$statiSocioDispIds[$n]\"as";
                     if ($statiSocioDispIds[$n] == $statiSocio[0])
                     {
                         $opt .= "selected";
                     }
-
                     $opt .= "> $statiSocioDispNomi[$n] </option>";
-
                     echo($opt);
                 }
                 ?>
@@ -531,11 +488,11 @@ $vipDisponibiliNomi = $this->vipDisponibiliNomi;
 
             <br/>
             <label for="modVip"> Vip di appartenenza:</label>
-            <select id="modVip" style="font-weight:bold;" onchange="changeVipToModify()">
+            <select id="modVip" name="vipNew" style="font-weight:bold;">
                 <?php
                 for ($n = 0; $n < count($vipDisponibiliNomi); $n++)
                 {
-                    $opt = "<option ";
+                    $opt = "<option value=\"$vipDisponibiliIds[$n]\" ";
                     if ($vipDisponibiliIds[$n] == $vips[0])
                     {
                         $opt .= "selected";
@@ -552,11 +509,9 @@ $vipDisponibiliNomi = $this->vipDisponibiliNomi;
             <br/>
             <input type="submit" name="" value="Modifica i dati" style="font-weight:bold;"/>
             <input type="hidden" id="nomeClownCurrent" name="nomeClownCurrent" value="<?php echo($nomiClowns[0]); ?>"/>
-            <input type="hidden" id="statoSocioNew" name="statoSocioNew" value="<?php echo($statiSocioDispIds[0]); ?>"/>
-            <input type="hidden" id="vipNew" name="vipNew" value="<?php echo($vipDisponibiliIds[0]); ?>"/>
             <input type="hidden" id="idToUpdate" name="idToUpdate" value="<?php echo($ids[0]); ?>"/>
             <input type="hidden" name="option" value="com_clowns"/>
-            <input type="hidden" name="task" value="modClown"/>
+            <input type="hidden" name="task" value="gestioneclowns.modClown"/>
 
 
         </form>

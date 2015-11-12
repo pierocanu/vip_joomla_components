@@ -6,7 +6,7 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
  *
  * @component clowns
- * @copyright Copyright (C) Piero Canu 
+ * @copyright Copyright (C) Piero Canu
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  */
 
@@ -71,7 +71,7 @@ class OpDBModelOpDB extends JModelItem
         // Create the clown object to insert in db.
         $clownToInsert = new stdClass();
         $clownToInsert->Nome = $array_params[0];
-        $clownToInsert->Cognome= $array_params[1];
+        $clownToInsert->Cognome = $array_params[1];
         $clownToInsert->Nome_Clown = $array_params[2];
         $clownToInsert->Mail = $array_params[5];
         $clownToInsert->Cell = $array_params[6];
@@ -126,7 +126,7 @@ class OpDBModelOpDB extends JModelItem
 
     function modClown($idToUpdate, $nomeClownNew, $mailClownNew, $nomeNew, $cognomeNew, $cellClownNew, $statoSocioNew, $vipNew)
     {
-        $array_params = array( $nomeNew, $cognomeNew, $nomeClownNew, $statoSocioNew, $vipNew, $mailClownNew, $cellClownNew);
+        $array_params = array($nomeNew, $cognomeNew, $nomeClownNew, $statoSocioNew, $vipNew, $mailClownNew, $cellClownNew);
         for ($i = 0; $i < count($array_params); $i++)
         {
             $array_params[$i] = trim($array_params[$i]); //Elimina gli spazi vuoti da inizio e fine
@@ -179,14 +179,36 @@ class OpDBModelOpDB extends JModelItem
 
     function leggiElencoClowns()
     {
+        return $this->leggiElencoClownsConFiltri(null, null);
+    }
+
+    function leggiElencoClownsConFiltri($statoSocioId, $vipId)
+    {
         // Prepare DB
         $db = JFactory::getDBO();
         $query = $db->getQuery(true);
+
+
+        $condition = "1=1";
+        if (isset($statoSocioId) && intval($statoSocioId) > 0)
+        {
+            $condition = "Stato_socio='$statoSocioId'";
+            if (isset($vipId) && intval($vipId) > 0)
+            {
+                $condition .= " AND ";
+            }
+        }
+
+        if (isset($vipId) && intval($vipId) > 0)
+        {
+            $condition .= "Vip='$vipId'";
+        }
 
         //Recupera i nomi dei clown in elenco (nomi, cognomi e nomi clown)
         $query
             ->select($db->quoteName(self::TABLE_CLOWNS_COLUMNS_FULL))
             ->from($db->quoteName(self::TABLE_CLOWNS_NAME))
+            ->where($condition)
             ->order('Nome_Clown');
 
         $db->setQuery($query);
@@ -284,7 +306,7 @@ class OpDBModelOpDB extends JModelItem
         $rows = $db->loadAssocList();
         if ($rows != NULL)
         {
-          //La tabella non è vuota
+            //La tabella non è vuota
             $n = 0;
             foreach ($rows as $row)
             {

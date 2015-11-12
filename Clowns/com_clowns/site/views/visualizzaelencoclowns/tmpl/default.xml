@@ -7,9 +7,9 @@
     <fields name="request">
         <fieldset name="request">
 
-            <field name="Titolo" type="text" label="Titolo pagina" description="Titolo della pagina"
+            <field name="title" type="text" label="Titolo pagina" description="Titolo della pagina"
                    default="Elenco clowns"/>
-            <field name="Testo" type="textarea" label="Testo prima dell'elenco"
+            <field name="clownListDesc" type="textarea" label="Testo prima dell'elenco"
                    description="Testo da visualizzare prima dell'elenco vero e proprio"
                    default="Questo è l'elenco di tutti i clown presenti nel database:"/>
 

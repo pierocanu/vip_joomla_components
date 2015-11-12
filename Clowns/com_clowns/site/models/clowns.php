@@ -18,11 +18,6 @@ jimport('joomla.application.component.modelitem');
 
 class clownsModelclowns extends JModelItem
 {
-    public function getTitolo()
-    {
-        $Titolo = JRequest::getString("Titolo");
-        return $Titolo;
-    }
 
     public function getTesto()
     {

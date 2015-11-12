@@ -36,10 +36,19 @@ defined('_JEXEC') or die('Restricted access');
     });
 </script>
 
+<h1 style="text-align:center; font-size:28px;">
+    <?php
 
-<h1 style="text-align:center; font-size:28px;"><?php echo $this->titolo; ?> </h1>
+    echo $this->titolo;
+    ?>
+</h1>
 
-<p style="margin-bottom: 4px; font-size: 18px;"><?php echo $this->testo; ?> </p>
+<p style="margin-bottom: 4px; font-size: 18px;">
+    <?php
+    $clownListDesc = JFactory::getApplication()->input->get('clownListDesc', '', 'TEXT');
+    echo $clownListDesc;
+    ?>
+</p>
 <br/>
 
 
@@ -50,23 +59,82 @@ defined('_JEXEC') or die('Restricted access');
 
     //Visualizza elenco clowns
 
+    $ids = $this->ids;
     $nomiClowns = $this->nomiClowns;
     $nomi = $this->nomi;
     $cognomi = $this->cognomi;
-    $mail = $this->mail;
+    $mails = $this->mails;
     $cell = $this->cell;
+    $statiSocio = $this->statiSoci;
+    $vips = $this->vips;
+
+    $countNomi = count($nomiClowns);
+
+    $statiSocioDispIds = $this->statiSocioDispIds;
+    $statiSocioDispNomi = $this->statiSocioDispNomi;
+
+    $vipDisponibiliIds = $this->vipDisponibiliIds;
+    $vipDisponibiliNomi = $this->vipDisponibiliNomi;
+
+    ?>
+
+    <form>
+        <label for="statoSocioToView">Visualizza ogni: </label>
+        <select id="statoSocioToView" name="statoSocioToView" onchange="this.form.submit()"
+                style="font-weight:bold;">
+            <option value="-1">Socio qualsiasi</option>
+            <?php
+            for ($n = 0; $n < count($statiSocioDispNomi); $n++)
+            {
+                echo("<option ");
+                echo("value=\"".$statiSocioDispIds[$n]."\" ");
+                if($statiSocioDispIds[$n] == $this->statoSocioToView)
+                {
+                    echo("selected ");
+                }
+                echo(">".$statiSocioDispNomi[$n]." </option>");
+            }
+            ?>
+        </select>
+
+        <select id="vipToView" name="vipToView" onchange="this.form.submit()"
+                style="font-weight:bold;">
+            <option value="-1">Di ogni Vip disponibile</option>
+            <?php
+            for ($n = 0; $n < count($vipDisponibiliNomi); $n++)
+            {
+                echo("<option ");
+                echo("value=\"".$vipDisponibiliIds[$n]."\" ");
+                if($vipDisponibiliIds[$n] == $this->vipToView)
+                {
+                    echo("selected ");
+                }
+                echo(">".$vipDisponibiliNomi[$n]." </option>");
+            }
+            ?>
+        </select>
+
+        <input type="hidden" name="option" value="com_clowns"/>
+        <input type="hidden" name="task" value="visualizzaelencoclowns.display"/>
+    </form>
+    <br/>
+
+    <?php
 
 
-    if ($nomiClowns == NULL) {
+    if ($nomiClowns == NULL)
+    {
         ?>
-        <p">Nessun clown in elenco.<p/>
+        <p">Nessun clown trovato con le opzioni selezionate<p/>
         <?php
-    } else {
+    } else
+    {
         ?>
+
 
         <p> Totale clowns: <?php echo(sizeOf($nomiClowns)); ?> </p>
 
-        <table>
+        <table >
             <tbody>
             <tr>
                 <th>Clown</th>
@@ -76,17 +144,20 @@ defined('_JEXEC') or die('Restricted access');
             </tr>
 
             <?php
-            for ($n = 0; $n < sizeof($nomiClowns); $n++) {
+            for ($n = 0; $n < sizeof($nomiClowns); $n++)
+            {
 
                 ?>
-                <tr <?php if ($n % 2 == 0) {
+                <tr <?php if ($n % 2 == 0)
+                {
                     echo "class=\"\"";
                 } ?>>
 
                     <td><span class="nomeclown"><?php echo "$nomiClowns[$n]"; ?></span></td>
                     <td><?php echo $nomi[$n] . " " . $cognomi[$n]; ?></td>
-                    <td><a class="mail" href="mailto:<?php echo $mail[$n]; ?>"><?php echo $mail[$n]; ?></a></td>
-                    <td><span class="cell"> <?php if ($cell[$n] != '0') {
+                    <td><a class="mail" href="mailto:<?php echo $mails[$n]; ?>"><?php echo $mails[$n]; ?></a></td>
+                    <td><span class="cell"> <?php if ($cell[$n] != '0')
+                            {
                                 echo $cell[$n];
                             } ?></span></td>
 

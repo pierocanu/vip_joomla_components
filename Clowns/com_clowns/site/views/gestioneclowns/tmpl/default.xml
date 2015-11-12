@@ -7,7 +7,7 @@
     <fields name="request">
         <fieldset name="request">
 
-            <field name="Titolo" type="text" label="Titolo pagina" description="Titolo della pagina"
+            <field name="title" type="text" label="Titolo pagina" description="Titolo della pagina"
                    default="Gestione elenco clowns"/>
 
         </fieldset>

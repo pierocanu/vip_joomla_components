@@ -16,7 +16,7 @@ defined('_JEXEC') or die('Restricted access');
 // import Joomla view library
 jimport('joomla.application.component.view');
 
-class clownsViewclowns extends JView
+class clownsViewgestioneclowns extends JView
 {
     function _construct()
     {
@@ -31,7 +31,7 @@ class clownsViewclowns extends JView
     // Overwriting JView display method
     function display($tpl = null)
     {
-        $this->titolo = $this->get('Titolo');
+        $this->titolo = JFactory::getApplication()->input->get('title', '', 'TEXT');
 
         $statiSocioDisponibili = $this->modelOpDB->getStatiSocioDisponibili();
         $this->statiSocioDispIds = $statiSocioDisponibili['ids'];

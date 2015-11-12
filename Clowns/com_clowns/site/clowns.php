@@ -17,7 +17,7 @@ defined('_JEXEC') or die('Restricted access');
 // import joomla controller library
 jimport('joomla.application.component.controller');
 
-// Get an instance of the controller prefixed by prova
+// Get an instance of the controller prefixed by clowns
 $controller = JController::getInstance('clowns');
 
 // Perform the Request task

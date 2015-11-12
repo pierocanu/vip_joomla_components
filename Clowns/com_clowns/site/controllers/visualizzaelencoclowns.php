@@ -18,7 +18,7 @@ defined('_JEXEC') or die('Restricted access');
 jimport('joomla.application.component.controller');
 
 
-class  ClownsController extends JController
+class  ClownsControllervisualizzaelencoclowns extends JController
 {
     function display()
     {
@@ -31,6 +31,18 @@ class  ClownsController extends JController
 
         $view->setModel($this->getModel('clowns'), true);
         $view->set('modelOpDB', new OpDbModelOpDB);
+
+        $statoSocioToView = JRequest::getVar('statoSocioToView');
+        if(isset($statoSocioToView))
+        {
+            $view->set('statoSocioToView', ucfirst($statoSocioToView));
+        }
+
+        $vipToView = JRequest::getVar('vipToView');
+        if(isset($vipToView))
+        {
+            $view->set('vipToView', ucfirst($vipToView));
+        }
 
         parent::display();
     }
